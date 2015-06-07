@@ -1,0 +1,47 @@
+package com.apekshit.pathFinder.model;
+
+
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+
+public class DepartureSection extends ChainSection{
+
+	@Override
+	public void setNext(ChainSection pNextInChain) {
+		this.nextInChain = pNextInChain;
+		
+	}
+
+	@Override
+	public void process(Scanner sc) {
+		
+		String conveyorData = null;
+		try{
+			while(!(conveyorData = sc.nextLine()).contains("# Section:")){
+				StringTokenizer tokens = new StringTokenizer(conveyorData, " ");
+				String[] splited = new String[tokens.countTokens()];
+				int index = 0;
+				while(tokens.hasMoreTokens()){
+					splited[index] = tokens.nextToken();
+					++index;
+				}
+				if(splited != null && splited.length == 4){
+					Departure dp = new Departure();
+					dp.setFlight_id(splited[0]);
+					dp.setFlight_gate(splited[1]);
+					dp.setDestination(splited[2]);
+					dp.setFlight_time(splited[3]);
+					departureList.put(dp.getFlight_id(),dp);
+				}
+			}
+			chainProgress = true;
+		}catch(NoSuchElementException noSuchElementException){
+			chainProgress = false;
+		}
+		if(chainProgress){
+			setNext(setNextSection(conveyorData));
+			nextInChain.process(sc);
+		}
+	}
+}
