@@ -1,0 +1,47 @@
+package com.apekshit.pathFinder.model;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
+import com.apekshit.pathFinder.factory.PathFinderFactory;
+
+public abstract class ChainSection {
+	protected ChainSection nextInChain;
+	protected boolean chainProgress;
+	PathFinderFactory pathFinderFactory;
+	protected Map<String,Departure> departureList;
+	protected List<Bag> bagList;
+	public void setPathFinderFactory(PathFinderFactory pPathFinderFactory){
+		this.pathFinderFactory = pPathFinderFactory;
+	}
+	public abstract void setNext(ChainSection nextInChain);
+	public abstract void process(Scanner sc);
+	protected ChainSection setNextSection(String section){
+		String sectionType = null;
+		if(section!= null && section.contains("# Section:")){
+			String []secsplit = section.split(":");
+			if(secsplit.length > 1){
+				sectionType = secsplit[1].trim();
+				
+			}
+		}
+		if("Departures".equals(sectionType)){
+			DepartureSection departSec = new DepartureSection();
+			departSec.setDepartureList(departureList);
+			departSec.setBagList(bagList);
+			return departSec;
+		}else if("Bags".equals(sectionType)){
+			BagsSection bagSection = new BagsSection();
+			bagSection.setBagList(bagList);
+			return bagSection;
+		}
+		return new ConveyorSection();
+	}
+	public void setDepartureList(Map<String,Departure> departureList){
+		 this.departureList = departureList;
+	}
+	public void setBagList(List<Bag> bagList){
+		 this.bagList = bagList;
+	}
+}
