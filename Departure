@@ -1,0 +1,124 @@
+package com.apekshit.pathFinder.model;
+
+public class Departure {
+	private String flight_id;
+	private String flight_gate;
+	private String destination;
+	private String flight_time;
+	/**
+	 * @return the flight_id
+	 */
+	public String getFlight_id() {
+		return flight_id;
+	}
+	/**
+	 * @param flight_id the flight_id to set
+	 */
+	public void setFlight_id(String flight_id) {
+		this.flight_id = flight_id;
+	}
+	/**
+	 * @return the flight_gate
+	 */
+	public String getFlight_gate() {
+		return flight_gate;
+	}
+	/**
+	 * @param flight_gate the flight_gate to set
+	 */
+	public void setFlight_gate(String flight_gate) {
+		this.flight_gate = flight_gate;
+	}
+	/**
+	 * @return the destination
+	 */
+	public String getDestination() {
+		return destination;
+	}
+	/**
+	 * @param destination the destination to set
+	 */
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
+	/**
+	 * @return the flight_time
+	 */
+	public String getFlight_time() {
+		return flight_time;
+	}
+	/**
+	 * @param flight_time the flight_time to set
+	 */
+	public void setFlight_time(String flight_time) {
+		this.flight_time = flight_time;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((destination == null) ? 0 : destination.hashCode());
+		result = prime * result
+				+ ((flight_gate == null) ? 0 : flight_gate.hashCode());
+		result = prime * result + ((flight_id == null) ? 0 : flight_id.hashCode());
+		result = prime * result
+				+ ((flight_time == null) ? 0 : flight_time.hashCode());
+		return result;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Departure)) {
+			return false;
+		}
+		Departure other = (Departure) obj;
+		if (destination == null) {
+			if (other.destination != null) {
+				return false;
+			}
+		} else if (!destination.equals(other.destination)) {
+			return false;
+		}
+		if (flight_gate == null) {
+			if (other.flight_gate != null) {
+				return false;
+			}
+		} else if (!flight_gate.equals(other.flight_gate)) {
+			return false;
+		}
+		if (flight_id == null) {
+			if (other.flight_id != null) {
+				return false;
+			}
+		} else if (!flight_id.equals(other.flight_id)) {
+			return false;
+		}
+		if (flight_time == null) {
+			if (other.flight_time != null) {
+				return false;
+			}
+		} else if (!flight_time.equals(other.flight_time)) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Departure [flight_id=" + flight_id + ", flight_gate="
+				+ flight_gate + ", destination=" + destination
+				+ ", flight_time=" + flight_time + "]";
+	}
+}
