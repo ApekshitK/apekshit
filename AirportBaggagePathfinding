@@ -1,0 +1,120 @@
+package com.apekshit.pathFinder.UserInterface;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+
+import com.apekshit.pathFinder.factory.PathFinderFactory;
+import com.apekshit.pathFinder.model.Bag;
+import com.apekshit.pathFinder.model.BagsSection;
+import com.apekshit.pathFinder.model.ChainSection;
+import com.apekshit.pathFinder.model.ConveyorSection;
+import com.apekshit.pathFinder.model.Departure;
+import com.apekshit.pathFinder.model.DepartureSection;
+
+public class AirportBaggagePathfinding {
+	public static void main(String[] args) {
+		File file = new File("BaggageInfo.txt");
+		Scanner sc = null;
+		try {
+			sc = new Scanner(file);
+			String section = sc.nextLine();
+			PathFinderFactory pathFinderFactory = new PathFinderFactory();
+			
+			if(section!= null && section.contains("# Section:")){
+				String []secsplit = section.split(":");
+				String sectionType = secsplit[1];
+				ChainSection sect = null;
+				if(sectionType != null && "Conveyor System".equalsIgnoreCase(sectionType.trim())){
+					
+				    sect = new ConveyorSection();
+				    sect.setPathFinderFactory(pathFinderFactory);
+				    Map<String,Departure> departureList = new HashMap<String,Departure>();
+				    sect.setDepartureList(departureList);
+				    List<Bag> bagList = new ArrayList<Bag>();
+				    sect.setBagList(bagList);
+					sect.process(sc);
+					for (Iterator<Bag> iterator = bagList.iterator(); iterator
+							.hasNext();) {
+						Bag bag = iterator.next();
+						Departure target = departureList.get(bag.getFlight_id());
+						String targetLocation = null;
+						if(bag.getFlight_id().equals("ARRIVAL")){
+							targetLocation = "BaggageClaim";
+						}else{
+							if(target != null){
+								targetLocation = target.getFlight_gate();
+							}
+						}
+						if(targetLocation != null){
+							pathFinderFactory.findPath(bag.getBagNumber(),bag.getEntryPoint(), targetLocation);
+						}
+					}
+					
+				}else if(sectionType != null && "Departures".equalsIgnoreCase(sectionType.trim())){
+
+				    sect = new DepartureSection();
+				    sect.setPathFinderFactory(pathFinderFactory);
+					sect.process(sc);
+				
+				}else if(sectionType != null && "Bags".equalsIgnoreCase(sectionType.trim())){
+
+				    sect = new BagsSection();
+				    sect.setPathFinderFactory(pathFinderFactory);
+					sect.process(sc);
+				
+				}
+			}
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}finally{
+			if(sc != null){
+				sc.close();
+			}
+		}
+		
+	}
+	static String getConveyorInput(Scanner sc){
+		String conveyorData = null;
+		int i =0;
+		while(!(conveyorData = sc.nextLine()).contains("# Section:")){
+			i++;
+			StringTokenizer tokens = new StringTokenizer(conveyorData, " ");
+			String[] splited = new String[tokens.countTokens()];
+			int index = 0;
+			System.out.println("Row" +i);
+			while(tokens.hasMoreTokens()){
+				splited[index] = tokens.nextToken();
+				System.out.println("Token_"+index+" :="+splited[index]);
+				++index;
+			}
+
+		}
+		return conveyorData;
+	}
+	static String getDepartureInput(Scanner sc){
+		String departureData = null;
+		int i =0;
+		while(!(departureData = sc.nextLine()).contains("# Section:")){
+			i++;
+			StringTokenizer tokens = new StringTokenizer(departureData, " ");
+			String[] splited = new String[tokens.countTokens()];
+			int index = 0;
+			System.out.println("Row" +i);
+			while(tokens.hasMoreTokens()){
+				splited[index] = tokens.nextToken();
+				System.out.println("Token_"+index+" :="+splited[index]);
+				++index;
+			}
+
+		}
+		return departureData;
+	}
+}
