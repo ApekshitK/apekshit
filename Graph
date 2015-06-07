@@ -1,0 +1,22 @@
+package com.apekshit.pathFinder.model;
+
+import java.util.List;
+import java.util.Set;
+
+public class Graph {
+	private final Set<Vertex> vertices;
+	private final List<Edge> edges;
+
+	public Graph(Set<Vertex> vertices, List<Edge> edges) {
+		this.vertices = vertices;
+		this.edges = edges;
+	}
+
+	public Set<Vertex> getVertexes() {
+		return vertices;
+	}
+
+	public List<Edge> getEdges() {
+		return edges;
+	}
+}
