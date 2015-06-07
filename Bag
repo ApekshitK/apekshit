@@ -1,0 +1,99 @@
+package com.apekshit.pathFinder.model;
+
+public class Bag {
+	private int bagNumber;
+	private String entryPoint;
+	private String flight_id;
+	/**
+	 * @return the bagNumber
+	 */
+	public int getBagNumber() {
+		return bagNumber;
+	}
+	/**
+	 * @param bagNumber the bagNumber to set
+	 */
+	public void setBagNumber(int bagNumber) {
+		this.bagNumber = bagNumber;
+	}
+	/**
+	 * @return the entryPoint
+	 */
+	public String getEntryPoint() {
+		return entryPoint;
+	}
+	/**
+	 * @param entryPoint the entryPoint to set
+	 */
+	public void setEntryPoint(String entryPoint) {
+		this.entryPoint = entryPoint;
+	}
+	/**
+	 * @return the flight_id
+	 */
+	public String getFlight_id() {
+		return flight_id;
+	}
+	/**
+	 * @param flight_id the flight_id to set
+	 */
+	public void setFlight_id(String flight_id) {
+		this.flight_id = flight_id;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + bagNumber;
+		result = prime * result
+				+ ((entryPoint == null) ? 0 : entryPoint.hashCode());
+		result = prime * result
+				+ ((flight_id == null) ? 0 : flight_id.hashCode());
+		return result;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Bag)) {
+			return false;
+		}
+		Bag other = (Bag) obj;
+		if (bagNumber != other.bagNumber) {
+			return false;
+		}
+		if (entryPoint == null) {
+			if (other.entryPoint != null) {
+				return false;
+			}
+		} else if (!entryPoint.equals(other.entryPoint)) {
+			return false;
+		}
+		if (flight_id == null) {
+			if (other.flight_id != null) {
+				return false;
+			}
+		} else if (!flight_id.equals(other.flight_id)) {
+			return false;
+		}
+		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return "Bag [bagNumber=" + bagNumber + ", entryPoint=" + entryPoint
+				+ ", flight_id=" + flight_id + "]";
+	}
+	
+	
+}
