@@ -1,0 +1,44 @@
+package com.apekshit.pathFinder.model;
+
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+
+public class ConveyorSection extends ChainSection{
+
+	@Override
+	public void setNext(ChainSection pNextInChain) {
+		this.nextInChain = pNextInChain;
+
+	}
+
+	@Override
+	public void process(Scanner sc) {
+		String conveyorData = null;
+		try{
+			while(!(conveyorData = sc.nextLine()).contains("# Section:")){
+				StringTokenizer tokens = new StringTokenizer(conveyorData, " ");
+				String[] splited = new String[tokens.countTokens()];
+				int index = 0;
+				while(tokens.hasMoreTokens()){
+					splited[index] = tokens.nextToken();
+					++index;
+				}
+				if(splited != null && splited.length == 3){
+					try{
+						pathFinderFactory.addEdges(splited[0], splited[1], Integer.parseInt(splited[2]));
+					}catch(NumberFormatException nfe){
+						System.err.println("Not a Number");
+					}
+				}
+			}
+			chainProgress = true;
+		}catch(NoSuchElementException noSuchElementException){
+			chainProgress = false;
+		}
+		if(chainProgress){
+			setNext(setNextSection(conveyorData));
+			nextInChain.process(sc);
+		}
+	}
+}
