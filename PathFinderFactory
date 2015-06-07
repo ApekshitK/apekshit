@@ -1,0 +1,53 @@
+package com.apekshit.pathFinder.factory;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
+import com.apekshit.pathFinder.model.Edge;
+import com.apekshit.pathFinder.model.Graph;
+import com.apekshit.pathFinder.model.Vertex;
+
+public class PathFinderFactory {
+	Set<Vertex> nodes;
+	List<Edge> edges;
+
+	public PathFinderFactory(){
+		nodes = new HashSet<Vertex>();
+		edges = new ArrayList<Edge>();
+	}
+	public void findPath(int bagNumber,String pSource,String pTarget) {
+		// Lets check from location Loc_1 to Loc_10
+		Graph graph = new Graph(nodes, edges);
+		PathFinderAlgorithm dijkstra = new PathFinderAlgorithm(graph);
+		{
+			Vertex sc = new Vertex(pSource);
+			Vertex target = new Vertex(pTarget);
+			dijkstra.execute(sc);
+			LinkedList<Vertex> path = dijkstra.getPath(target);
+			System.out.printf("%04d", bagNumber);
+			System.out.print(" ");
+			if(path!= null && path.size() > 0){
+				for (int i = 0; i < path.size(); i++) {
+					System.out.print(path.get(i)+" ");
+				}
+				System.out.println(": "+dijkstra.totalWeight());
+			}else{
+				System.out.println("No Path found:");
+			}
+		}
+	}
+
+	public void  addEdges(String sourceLocNo, String destLocNo,
+			int duration) {
+
+		Vertex source = new Vertex(sourceLocNo);
+		Vertex destination = new Vertex(destLocNo);
+		nodes.add(source);
+		nodes.add(destination);
+		Edge lane = new Edge(source, destination, duration);
+		edges.add(lane);
+	}
+}
