@@ -8,15 +8,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.StringTokenizer;
+
 
 import com.apekshit.pathFinder.factory.PathFinderFactory;
 import com.apekshit.pathFinder.model.Bag;
-import com.apekshit.pathFinder.model.BagsSection;
+
 import com.apekshit.pathFinder.model.ChainSection;
 import com.apekshit.pathFinder.model.ConveyorSection;
 import com.apekshit.pathFinder.model.Departure;
-import com.apekshit.pathFinder.model.DepartureSection;
 
 public class AirportBaggagePathfinding {
 	public static void main(String[] args) {
@@ -57,18 +56,6 @@ public class AirportBaggagePathfinding {
 						}
 					}
 					
-				}else if(sectionType != null && "Departures".equalsIgnoreCase(sectionType.trim())){
-
-				    sect = new DepartureSection();
-				    sect.setPathFinderFactory(pathFinderFactory);
-					sect.process(sc);
-				
-				}else if(sectionType != null && "Bags".equalsIgnoreCase(sectionType.trim())){
-
-				    sect = new BagsSection();
-				    sect.setPathFinderFactory(pathFinderFactory);
-					sect.process(sc);
-				
 				}
 			}
 			
@@ -80,41 +67,5 @@ public class AirportBaggagePathfinding {
 			}
 		}
 		
-	}
-	static String getConveyorInput(Scanner sc){
-		String conveyorData = null;
-		int i =0;
-		while(!(conveyorData = sc.nextLine()).contains("# Section:")){
-			i++;
-			StringTokenizer tokens = new StringTokenizer(conveyorData, " ");
-			String[] splited = new String[tokens.countTokens()];
-			int index = 0;
-			System.out.println("Row" +i);
-			while(tokens.hasMoreTokens()){
-				splited[index] = tokens.nextToken();
-				System.out.println("Token_"+index+" :="+splited[index]);
-				++index;
-			}
-
-		}
-		return conveyorData;
-	}
-	static String getDepartureInput(Scanner sc){
-		String departureData = null;
-		int i =0;
-		while(!(departureData = sc.nextLine()).contains("# Section:")){
-			i++;
-			StringTokenizer tokens = new StringTokenizer(departureData, " ");
-			String[] splited = new String[tokens.countTokens()];
-			int index = 0;
-			System.out.println("Row" +i);
-			while(tokens.hasMoreTokens()){
-				splited[index] = tokens.nextToken();
-				System.out.println("Token_"+index+" :="+splited[index]);
-				++index;
-			}
-
-		}
-		return departureData;
 	}
 }
